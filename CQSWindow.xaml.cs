@@ -18,9 +18,9 @@ namespace CustomerQueuingSystem
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CQSWindow : Window
     {
-        public MainWindow()
+        public CQSWindow()
         {
             InitializeComponent();
         }
