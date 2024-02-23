@@ -10,11 +10,12 @@ Colton Judy
 
 Purpose
     
-The Customer Queuing System(CQS) is designed to help stores minimize checkout traffic by utilizing queuing systems for available registers and self-checkouts. The CQS will be run through a kiosk implemented within the store. The system will be configured to the available checkout POSs specific to each store, taking the types of POSs, acceptable payment, and if it is an express checkout into account. The CQS will take in input from individual customers, and the input will be used in the system to direct them to the most desirable POS to meet their needs. The system will also make recommendations for the second-best desirable POS should all the most desirable POSs be full, and store staff will be made aware that more registers/self-checkouts may need to be available to accommodate customer traffic. Details of checkout information can be collected after the kiosk closes for the store day. 
-
-
-
-
+The Customer Queuing System(CQS) is designed to help stores minimize checkout traffic by utilizing queuing systems for available registers and self-checkouts.
+The CQS will be run through a kiosk implemented within the store. The system will be configured to the available checkout POSs specific to each store, taking the
+types of POSs, acceptable payment, and if it is an express checkout into account. The CQS will take in input from individual customers, and the input will be 
+used in the system to direct them to the most desirable POS to meet their needs. The system will also make recommendations for the second-best desirable POS 
+should all the most desirable POSs be full, and store staff will be made aware that more registers/self-checkouts may need to be available to accommodate 
+customer traffic. Details of checkout information can be collected after the kiosk closes for the store day. 
 
 
 Requirements
