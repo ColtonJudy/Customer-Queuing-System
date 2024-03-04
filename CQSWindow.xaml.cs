@@ -24,5 +24,41 @@ namespace CustomerQueuingSystem
         {
             InitializeComponent();
         }
+
+        private void ExpressButton_Click(object sender, RoutedEventArgs e)
+        {
+            NumOfItemsScreen.Visibility = Visibility.Collapsed;
+            POSTypeScreen.Visibility = Visibility.Visible;
+        }
+
+        private void NonExpressButton_Click(object sender, RoutedEventArgs e)
+        {
+            NumOfItemsScreen.Visibility = Visibility.Collapsed;
+            POSTypeScreen.Visibility = Visibility.Visible;
+        }
+
+        private void SelfCheckoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            POSTypeScreen.Visibility = Visibility.Collapsed;
+            PaymentTypeScreen.Visibility = Visibility.Visible;
+        }
+
+        private void RegularCheckoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            POSTypeScreen.Visibility = Visibility.Collapsed;
+            PaymentTypeScreen.Visibility = Visibility.Visible;
+        }
+
+        private void CashButton_Click(object sender, RoutedEventArgs e)
+        {
+            PaymentTypeScreen.Visibility = Visibility.Collapsed;
+            ThankYouScreen.Visibility = Visibility.Visible;
+        }
+
+        private void CardCheckoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            PaymentTypeScreen.Visibility = Visibility.Collapsed;
+            ThankYouScreen.Visibility = Visibility.Visible;
+        }
     }
 }
