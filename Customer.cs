@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace CustomerQueuingSystem
 {
+
+
     internal class Customer
     {
         public PaymentType paymentChoice;
         public CheckoutType checkoutChoice;
-        public bool expressChoice;
+        public bool wantsExpress;
+
+        public Customer(PaymentType paymentChoice, CheckoutType checkoutChoice, bool wantsExpress)
+        {
+            this.paymentChoice = paymentChoice;
+            this.checkoutChoice = checkoutChoice;
+            this.wantsExpress = wantsExpress;
+        }
     }
 }

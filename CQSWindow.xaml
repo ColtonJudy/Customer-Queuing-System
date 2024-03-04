@@ -92,7 +92,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="1"  x:Name="ThankYouText" Text="Thank You!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="20"/>
-                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="2"  x:Name="GoToRegisterText" Text="Go to the following register" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="20"/>
+                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="2"  x:Name="RecommendedRegisterText" Text="Default Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="20"/>
              </Grid>
         </StackPanel>
     </Grid>

@@ -29,11 +29,35 @@ namespace CustomerQueuingSystem
     internal class POS
     {
         public int POSNumber;
-        public PaymentType paymentType;
+        public bool acceptsCash;
+        public bool acceptsCard;
         public CheckoutType checkoutType;
         public bool isExpress;
         public CheckoutState checkoutState;
         public int maxCustomerCount;
-        public List<Customer> customers;
+        public List<Customer> customers = new List<Customer>();
+
+        public POS(int pOSNumber, bool acceptsCash, bool acceptsCard, CheckoutType checkoutType, bool isExpress, CheckoutState checkoutState, int maxCustomerCount)
+        {
+            POSNumber = pOSNumber;
+            this.acceptsCash = acceptsCash;
+            this.acceptsCard = acceptsCard;
+            this.checkoutType = checkoutType;
+            this.isExpress = isExpress;
+            this.checkoutState = checkoutState;
+            this.maxCustomerCount = maxCustomerCount;
+        }
+
+        public bool AcceptsPaymentType(PaymentType paymentType)
+        {
+            if(paymentType == PaymentType.Cash)
+            {
+                return acceptsCash;
+            }
+            else
+            {
+                return acceptsCard;
+            }
+        }
     }
 }
