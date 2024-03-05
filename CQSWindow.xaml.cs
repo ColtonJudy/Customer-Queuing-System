@@ -34,24 +34,7 @@ namespace CustomerQueuingSystem
 
         private void CreateCQS()
         {
-            POS SCO_POS = new POS(100, true, true, CheckoutType.SCO, false, CheckoutState.Open, 1);
-            POS SCO_POS2 = new POS(101, true, true, CheckoutType.SCO, false, CheckoutState.Open, 1);
-            POS cashier_POS = new POS(200, true, true, CheckoutType.Cashier, false, CheckoutState.Open, 3);
-            POS cashier_POS2 = new POS(201, true, true, CheckoutType.Cashier, false, CheckoutState.Open, 3);
-            POS cashier_POS3 = new POS(202, false, true, CheckoutType.Cashier, false, CheckoutState.Open, 3);
-            POS express_POS = new POS(300, true, true, CheckoutType.Express, true, CheckoutState.Open, 3);
-            POS express_POS2 = new POS(301, true, true, CheckoutType.Express, true, CheckoutState.Open, 3);
-
-            List<POS> POS_List = new List<POS>();
-            POS_List.Add(SCO_POS);
-            POS_List.Add(SCO_POS2);
-            POS_List.Add(cashier_POS);
-            POS_List.Add(cashier_POS2);
-            POS_List.Add(cashier_POS3);
-            POS_List.Add(express_POS);
-            POS_List.Add(express_POS2);
-
-            store = new Store(POS_List);
+            store = new Store(Config.GetPOSsFromJSON());
         }
 
         private void ExpressButton_Click(object sender, RoutedEventArgs e)

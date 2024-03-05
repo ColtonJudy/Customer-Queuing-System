@@ -1,0 +1,65 @@
+[
+  {
+    "POSNumber": 100,
+    "AcceptsCash": true,
+    "AcceptsCard": true,
+    "CheckoutType": 0,
+    "IsExpress": false,
+    "CheckoutState": 0,
+    "MaxCustomerCount": 1
+  },
+  {
+    "POSNumber": 101,
+    "AcceptsCash": true,
+    "AcceptsCard": true,
+    "CheckoutType": 0,
+    "IsExpress": false,
+    "CheckoutState": 0,
+    "MaxCustomerCount": 1
+  },
+  {
+    "POSNumber": 200,
+    "AcceptsCash": true,
+    "AcceptsCard": true,
+    "CheckoutType": 1,
+    "IsExpress": false,
+    "CheckoutState": 0,
+    "MaxCustomerCount": 3
+  },
+  {
+    "POSNumber": 201,
+    "AcceptsCash": true,
+    "AcceptsCard": true,
+    "CheckoutType": 1,
+    "IsExpress": false,
+    "CheckoutState": 0,
+    "MaxCustomerCount": 3
+  },
+  {
+    "POSNumber": 202,
+    "AcceptsCash": false,
+    "AcceptsCard": true,
+    "CheckoutType": 1,
+    "IsExpress": false,
+    "CheckoutState": 0,
+    "MaxCustomerCount": 3
+  },
+  {
+    "POSNumber": 301,
+    "AcceptsCash": true,
+    "AcceptsCard": true,
+    "CheckoutType": 2,
+    "IsExpress": true,
+    "CheckoutState": 0,
+    "MaxCustomerCount": 3
+  },
+  {
+    "POSNumber": 302,
+    "AcceptsCash": true,
+    "AcceptsCard": true,
+    "CheckoutType": 2,
+    "IsExpress": true,
+    "CheckoutState": 0,
+    "MaxCustomerCount": 3
+  }
+]

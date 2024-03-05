@@ -15,7 +15,7 @@ namespace CustomerQueuingSystem
         {
             foreach(POS pos in POSList)
             {
-                if(pos.checkoutType == CheckoutType.SCO)
+                if(pos.CheckoutType == CheckoutType.SCO)
                 {
                     SCO_POSList.Add(pos);
                 }

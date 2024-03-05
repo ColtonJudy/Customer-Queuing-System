@@ -30,13 +30,13 @@ namespace CustomerQueuingSystem
 
                 if(customer.checkoutChoice == CheckoutType.SCO)
                 {
-                    store.SCO_POSList[bestPOSNum].customers.Add(customer);
+                    store.SCO_POSList[bestPOSNum].Customers.Add(customer);
 
                     return "Please go to self-checkout register #" + store.SCO_POSList[bestPOSNum].POSNumber;
                 }
                 else
                 {
-                    store.CashierPOSList[bestPOSNum].customers.Add(customer);
+                    store.CashierPOSList[bestPOSNum].Customers.Add(customer);
 
                     return "Please go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
                 }
@@ -54,11 +54,11 @@ namespace CustomerQueuingSystem
         {
             for (int i = 0; i < store.SCO_POSList.Count(); i++)
             {
-                if (store.SCO_POSList[i].checkoutState == CheckoutState.Open)
+                if (store.SCO_POSList[i].CheckoutState == CheckoutState.Open)
                 {
                     if (store.SCO_POSList[i].AcceptsPaymentType(customerPaymentChoice))
                     {
-                        if (store.SCO_POSList[i].customers.Count() == 0)
+                        if (store.SCO_POSList[i].Customers.Count() == 0)
                         {
                             return i;
                         }
@@ -74,29 +74,29 @@ namespace CustomerQueuingSystem
             int currBestLaneNumOfCustomers = 3;
             for (int i = 0; i < store.CashierPOSList.Count(); i++)
             {
-                if (store.CashierPOSList[i].checkoutState == CheckoutState.Open)
+                if (store.CashierPOSList[i].CheckoutState == CheckoutState.Open)
                 {
                     //if this POS is Express, and the customer wants express, use it
-                    if (customerCheckoutChoice == CheckoutType.Express && store.CashierPOSList[i].checkoutType == CheckoutType.Express)
+                    if (customerCheckoutChoice == CheckoutType.Express && store.CashierPOSList[i].CheckoutType == CheckoutType.Express)
                     {
                         if (store.CashierPOSList[i].AcceptsPaymentType(customerPaymentChoice))
                         {
-                            if (store.CashierPOSList[i].customers.Count() < 3 && store.CashierPOSList[i].customers.Count() < currBestLaneNumOfCustomers)
+                            if (store.CashierPOSList[i].Customers.Count() < 3 && store.CashierPOSList[i].Customers.Count() < currBestLaneNumOfCustomers)
                             {
                                 currBestLane = i;
-                                currBestLaneNumOfCustomers = store.CashierPOSList[i].customers.Count();
+                                currBestLaneNumOfCustomers = store.CashierPOSList[i].Customers.Count();
                             }
                         }
                     }
                     //otherwise, if this POS is Cashier, and the customer wants Cashier, use it
-                    else if (customerCheckoutChoice == CheckoutType.Cashier && store.CashierPOSList[i].checkoutType == CheckoutType.Cashier)
+                    else if (customerCheckoutChoice == CheckoutType.Cashier && store.CashierPOSList[i].CheckoutType == CheckoutType.Cashier)
                     {
                         if (store.CashierPOSList[i].AcceptsPaymentType(customerPaymentChoice))
                         {
-                            if (store.CashierPOSList[i].customers.Count() < 3 && store.CashierPOSList[i].customers.Count() < currBestLaneNumOfCustomers)
+                            if (store.CashierPOSList[i].Customers.Count() < 3 && store.CashierPOSList[i].Customers.Count() < currBestLaneNumOfCustomers)
                             {
                                 currBestLane = i;
-                                currBestLaneNumOfCustomers = store.CashierPOSList[i].customers.Count();
+                                currBestLaneNumOfCustomers = store.CashierPOSList[i].Customers.Count();
                             }
                         }
                     }
