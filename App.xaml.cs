@@ -13,5 +13,12 @@ namespace CustomerQueuingSystem
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            if (Config.GetShowStartScreen())
+                StartupUri = new Uri("/CustomerQueuingSystem;component/StartWindow.xaml", UriKind.Relative);
+            else
+                StartupUri = new Uri("/CustomerQueuingSystem;component/CQSWindow.xaml", UriKind.Relative);
+        }
     }
 }

@@ -1,0 +1,32 @@
+﻿<Window x:Class="CustomerQueuingSystem.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CustomerQueuingSystem"
+        mc:Ignorable="d"
+        Title="StartWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="1"  x:Name="WelcomeText" Text="Welcome to the Customer Queuing System" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="20"/>
+
+
+        <Button Grid.Column="1" Grid.Row="2" x:Name="EditConfigButton" Content="Edit Store Config" Margin="10, 20" FontSize="18" Click="EditConfigButton_Click"/>
+        <Button Grid.Column="2" Grid.Row="2" x:Name="StartCQSButton" Content="Start CQS" Margin="10, 20" FontSize="18" Click="StartCQSButton_Click"/>
+
+        <CheckBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" x:Name="DontShowCheckbox" Content="Don't show start screen again" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="10, 20" FontSize="18"/>
+    </Grid>
+</Window>
