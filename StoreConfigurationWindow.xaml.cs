@@ -37,10 +37,10 @@ namespace CustomerQueuingSystem
             //set the checkout type box to the checkout type enum in POS.cs
             CheckoutTypeComboBox.ItemsSource = Enum.GetValues(typeof(CheckoutType)).Cast<CheckoutType>();
             CheckoutTypeComboBox.SelectedIndex = 1;
-            UpdateListView();
+            ConfigureListView();
         }
 
-        private void UpdateListView()
+        private void ConfigureListView()
         {
             CurrentRegistersListView.ItemsSource = tempPOSList;
         }
@@ -63,22 +63,34 @@ namespace CustomerQueuingSystem
 
         private void AddNewButton_Click(object sender, RoutedEventArgs e)
         {
+            DeleteRegisterButton.Visibility = Visibility.Collapsed;
             EditPanel.Visibility = Visibility.Visible;
             ResetFields();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            int selectedPOSIndex = CurrentRegistersListView.SelectedIndex;
+            POS selectedPOS = tempPOSList[selectedPOSIndex];
+
+            POSNumberTextBox.Text = selectedPOS.POSNumber.ToString();
+            AcceptsCashCheckBox.IsChecked = selectedPOS.AcceptsCash;
+            AcceptsCardCheckBox.IsChecked = selectedPOS.AcceptsCard;
+            CheckoutTypeComboBox.SelectedIndex = (int) selectedPOS.CheckoutType;
+            CustomerMaxTextBox.Text = selectedPOS.MaxCustomerCount.ToString();
+
             EditPanel.Visibility = Visibility.Visible;
             DeleteRegisterButton.Visibility = Visibility.Visible;
-            ResetFields();
         }
 
         private void SaveAndStartButton_Click(object sender, RoutedEventArgs e)
         {
+            //update json w/ changes
             Config.SetPOSsInJSON(tempPOSList);
 
-            //update json w/ changes
+            CQSWindow CQSWindow = new CQSWindow();
+            CQSWindow.Show();
+            Close();
         }
 
         private void SaveRegisterButton_Click(object sender, RoutedEventArgs e)
@@ -108,6 +120,7 @@ namespace CustomerQueuingSystem
             else
             {
                 tempPOSList.Add(pos);
+                tempPOSList.Sort((x, y) => x.POSNumber.CompareTo(y.POSNumber)); //sort the list so that the POS numbers are always in ascending order
             }
 
             CurrentRegistersListView.Items.Refresh();
@@ -120,6 +133,12 @@ namespace CustomerQueuingSystem
 
         private void DeleteRegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            int selectedPOSIndex = CurrentRegistersListView.SelectedIndex;
+            POS selectedPOS = tempPOSList[selectedPOSIndex];
+            tempPOSList.Remove(selectedPOS);
+
+            CurrentRegistersListView.Items.Refresh();
+
             EditPanel.Visibility = Visibility.Collapsed;
             DeleteRegisterButton.Visibility = Visibility.Collapsed;
             ResetFields();
