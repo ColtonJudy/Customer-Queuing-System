@@ -55,6 +55,11 @@ namespace CustomerQueuingSystem
             this.MaxCustomerCount = maxCustomerCount;
         }
 
+        public override string ToString()
+        {
+            return "POS #" + POSNumber;
+        }
+
         public bool AcceptsPaymentType(PaymentType paymentType)
         {
             if(paymentType == PaymentType.Cash)
