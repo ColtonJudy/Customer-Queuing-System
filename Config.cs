@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,6 +37,21 @@ namespace CustomerQueuingSystem
                 Console.WriteLine("Error reading or deserializing JSON: " + ex.Message);
 
                 return new List<POS>();
+            }
+        }
+
+        public static void SetPOSsInJSON(List<POS> POSs)
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(fileName);
+                var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
+                jsonObject["POSs"] = POSs;
+                File.WriteAllText(fileName, JsonConvert.SerializeObject(jsonObject));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating JSON: " + ex.Message);
             }
         }
 
