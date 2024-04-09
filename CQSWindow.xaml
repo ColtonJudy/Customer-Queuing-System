@@ -16,19 +16,22 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="100"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
-                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="1"  x:Name="WelcomeText" Text="Welcome to the Customer Queuing System!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="20"/>
-                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="2"  x:Name="ExpressText" Text="Do you have less than 15 items?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="20"/>
 
+                <Image Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" x:Name="logoImage1" Source="Images/logo.png"/>
                 
-                <Button Grid.Column="1" Grid.Row="3" x:Name="ExpressButton" Content="Yes" Margin="10, 20" FontSize="18" Click="ExpressButton_Click"/>
-                <Button Grid.Column="2" Grid.Row="3" x:Name="NonExpressButton" Content="No" Margin="10, 20" FontSize="18" Click="NonExpressButton_Click"/>
+                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="3"  x:Name="WelcomeText" Text="Welcome to the Customer Queuing System!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="20"/>
+                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="4"  x:Name="ExpressText" Text="Do you have less than 15 items?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="20"/>
+
+                <Button Grid.Column="1" Grid.Row="5" x:Name="ExpressButton" Content="Yes" Margin="10, 20" FontSize="18" Click="ExpressButton_Click"/>
+                <Button Grid.Column="2" Grid.Row="5" x:Name="NonExpressButton" Content="No" Margin="10, 20" FontSize="18" Click="NonExpressButton_Click"/>
             </Grid>
         </StackPanel>
         <StackPanel x:Name= "POSTypeScreen" Visibility="Collapsed">
@@ -40,17 +43,20 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="1"  x:Name="POSTypeText" Text="What Type of Register?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="20"/>
+                <Image Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" x:Name="logoImage2" Source="Images/logo.png"/>
 
+                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="3"  x:Name="POSTypeText" Text="What Type of Register?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="20"/>
 
-                <Button Grid.Column="1" Grid.Row="2" x:Name="SelfCheckoutButton" Content="Self Checkout" Margin="10, 20" FontSize="18" Click="SelfCheckoutButton_Click"/>
-                <Button Grid.Column="2" Grid.Row="2" x:Name="RegularCheckoutButton" Content="Cashier" Margin="10, 20" FontSize="18" Click="RegularCheckoutButton_Click"/>
+                <Button Grid.Column="1" Grid.Row="4" x:Name="SelfCheckoutButton" Content="Self Checkout" Margin="10, 20" FontSize="18" Click="SelfCheckoutButton_Click"/>
+                <Button Grid.Column="2" Grid.Row="4" x:Name="RegularCheckoutButton" Content="Cashier" Margin="10, 20" FontSize="18" Click="RegularCheckoutButton_Click"/>
             </Grid>
         </StackPanel>
         <StackPanel x:Name= "PaymentTypeScreen" Visibility="Collapsed">
@@ -62,17 +68,20 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="1"  x:Name="PaymentTypeText" Text="Do you want to pay with cash or card?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="20"/>
+                <Image Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" x:Name="logoImage3" Source="Images/logo.png"/>
 
+                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="3"  x:Name="PaymentTypeText" Text="Do you want to pay with cash or card?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="20"/>
 
-                <Button Grid.Column="1" Grid.Row="2" x:Name="CashButton" Content="Cash" Margin="10, 20" FontSize="18" Click="CashButton_Click"/>
-                <Button Grid.Column="2" Grid.Row="2" x:Name="CardButton" Content="Card" Margin="10, 20" FontSize="18" Click="CardCheckoutButton_Click"/>
+                <Button Grid.Column="1" Grid.Row="4" x:Name="CashButton" Content="Cash" Margin="10, 20" FontSize="18" Click="CashButton_Click"/>
+                <Button Grid.Column="2" Grid.Row="4" x:Name="CardButton" Content="Card" Margin="10, 20" FontSize="18" Click="CardCheckoutButton_Click"/>
             </Grid>
         </StackPanel>
 
@@ -85,14 +94,18 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="75"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="1"  x:Name="ThankYouText" Text="Thank You!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="20"/>
-                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="2"  x:Name="RecommendedRegisterText" Text="Default Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="20"/>
+                <Image Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" x:Name="logoImage4" Source="Images/logo.png"/>
+
+                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="3"  x:Name="ThankYouText" Text="Thank You!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="20"/>
+                <TextBlock Grid.Column="1" Grid.ColumnSpan ="2" Grid.Row="4"  x:Name="RecommendedRegisterText" Text="Default Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="20"/>
              </Grid>
         </StackPanel>
     </Grid>

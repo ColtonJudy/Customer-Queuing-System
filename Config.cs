@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
@@ -45,9 +46,9 @@ namespace CustomerQueuingSystem
             try
             {
                 string jsonString = File.ReadAllText(fileName);
-                var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
+                var jsonObject = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(jsonString);
                 jsonObject["POSs"] = POSs;
-                File.WriteAllText(fileName, JsonConvert.SerializeObject(jsonObject));
+                File.WriteAllText(fileName, System.Text.Json.JsonSerializer.Serialize(jsonObject, new JsonSerializerOptions { WriteIndented = true }));
             }
             catch (Exception ex)
             {
