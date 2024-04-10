@@ -29,7 +29,15 @@ namespace CustomerQueuingSystem
         public CQSWindow()
         {
             InitializeComponent();
+            LoadFromConfig();
             CreateCQS();
+        }
+
+        private void LoadFromConfig()
+        {
+            string[] storeInfo = Config.GetStoreInfo();
+            this.Title = storeInfo[0];
+            WelcomeText.Text = storeInfo[1];
         }
 
         private void CreateCQS()

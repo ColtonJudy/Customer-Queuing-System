@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -38,6 +40,30 @@ namespace CustomerQueuingSystem
             CheckoutTypeComboBox.ItemsSource = Enum.GetValues(typeof(CheckoutType)).Cast<CheckoutType>();
             CheckoutTypeComboBox.SelectedIndex = 1;
             ConfigureListView();
+        }
+
+        private void UploadLogoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new();
+            openFileDialog.Filter = "Image files | *.jpg; *.png";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                LogoPathTextbox.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (StoreNameTextbox.Text != "" && WelcomeTextTextbox.Text != "")
+            {
+                ConfigWindowPage1.Visibility = Visibility.Collapsed;
+                ConfigWindowPage2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ErrorLabel1.Visibility = Visibility.Visible;
+            }
+
         }
 
         private void ConfigureListView()
@@ -85,6 +111,27 @@ namespace CustomerQueuingSystem
 
         private void SaveAndStartButton_Click(object sender, RoutedEventArgs e)
         {
+
+            //copy logo image into resource directory (This copies it into the .\bin\debug folder used at runtime)
+            //TODO: figure out how to put image directly into the project "Images" directory
+            if(LogoPathTextbox.Text != "")
+            {
+                try
+                {
+                    string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    string imagesFolderPath = System.IO.Path.Combine(baseDirectory, "Images\\logo.png");
+
+                    File.Copy(LogoPathTextbox.Text, imagesFolderPath, true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to upload logo: {ex.Message}", "Upload Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            //copy the store name and welcome text to json
+            Config.SetStoreInfo(StoreNameTextbox.Text, WelcomeTextTextbox.Text);
+
             //update json w/ changes
             Config.SetPOSsInJSON(tempPOSList);
 
@@ -97,7 +144,7 @@ namespace CustomerQueuingSystem
         {
             if(POSNumberTextBox.Text == "" || CustomerMaxTextBox.Text == "")
             {
-                ErrorLabel.Content = "All fields must have a value";
+                ErrorLabel2.Content = "All fields must have a value";
                 return;
             }
 

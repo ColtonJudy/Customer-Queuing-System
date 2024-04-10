@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -88,6 +88,45 @@ namespace CustomerQueuingSystem
                 Console.WriteLine("Error reading or deserializing JSON: " + ex.Message);
 
                 return true;
+            }
+        }
+
+        public static void SetStoreInfo(string storeName, string welcomeText)
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(fileName);
+                var jobject = JsonNode.Parse(jsonString);
+                jobject["StoreName"] = storeName;
+                jobject["WelcomeText"] = welcomeText;
+                File.WriteAllText(fileName, jobject.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating JSON: " + ex.Message);
+            }
+        }
+
+        //returns an array where index 0 is the store name, and index 1 is the welcome text
+        public static string[] GetStoreInfo()
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(fileName);
+                var jobject = JsonNode.Parse(jsonString);
+
+                string storeName = JsonSerializer.Deserialize<string>(jobject?["StoreName"]);
+                string welcomeText = JsonSerializer.Deserialize<string>(jobject?["WelcomeText"]);
+
+                string[] storeInfo = { storeName, welcomeText };
+                return storeInfo;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error reading or deserializing JSON: " + ex.Message);
+
+                string[] storeInfo = { "", "" };
+                return storeInfo;
             }
         }
     }
