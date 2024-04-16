@@ -138,7 +138,7 @@ namespace CustomerQueuingSystem
                 string jsonString = File.ReadAllText(fileName);
                 var jobject = JsonNode.Parse(jsonString);
 
-                var section = jobject?["ShowStartScreen"];
+                var section = jobject?["RunSimulation"];
                 bool runSimulation = JsonSerializer.Deserialize<bool>(section);
 
                 return runSimulation;
@@ -147,7 +147,7 @@ namespace CustomerQueuingSystem
             {
                 Console.WriteLine("Error reading or deserializing JSON: " + ex.Message);
 
-                return true;
+                return false;
             }
         }
     }
