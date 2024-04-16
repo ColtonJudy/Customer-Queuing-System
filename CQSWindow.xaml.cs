@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,17 +21,25 @@ namespace CustomerQueuingSystem
     /// </summary>
     public partial class CQSWindow : Window
     {
-
         PaymentType paymentChoice;
         CheckoutType checkoutChoice;
         bool isExpress;
         Store store;
+        Simulation? simulation;
 
         public CQSWindow()
         {
             InitializeComponent();
             LoadFromConfig();
-            CreateCQS();
+
+            store = new Store(Config.GetPOSsFromJSON());
+
+
+            if (Config.GetRunSimulation())
+            {
+                simulation = new Simulation(store);
+                simulation.Start();
+            }
         }
 
         private void LoadFromConfig()
@@ -38,11 +47,6 @@ namespace CustomerQueuingSystem
             string[] storeInfo = Config.GetStoreInfo();
             this.Title = storeInfo[0];
             WelcomeText.Text = storeInfo[1];
-        }
-
-        private void CreateCQS()
-        {
-            store = new Store(Config.GetPOSsFromJSON());
         }
 
         private void ExpressButton_Click(object sender, RoutedEventArgs e)
@@ -111,6 +115,12 @@ namespace CustomerQueuingSystem
             Customer customer = new Customer(paymentChoice, checkoutChoice, isExpress);
 
             string recommendation = CQS.AddCustomerToStore(customer, store);
+            
+            if(simulation != null)
+            {
+                simulation.Update(store);
+            }
+
             RecommendedRegisterText.Text = recommendation;
 
             await Task.Delay(5000);

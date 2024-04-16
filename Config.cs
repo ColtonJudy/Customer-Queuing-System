@@ -21,7 +21,7 @@ namespace CustomerQueuingSystem
                 string jsonString = File.ReadAllText(fileName);
                 var jobject = JsonNode.Parse(jsonString);
                 var POSSection = jobject?["POSs"];
-                var POSList = System.Text.Json.JsonSerializer.Deserialize<List<POS>>(POSSection);
+                var POSList = JsonSerializer.Deserialize<List<POS>>(POSSection);
                 
                 if(POSList != null)
                 {
@@ -46,9 +46,9 @@ namespace CustomerQueuingSystem
             try
             {
                 string jsonString = File.ReadAllText(fileName);
-                var jsonObject = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(jsonString);
+                var jsonObject = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonString);
                 jsonObject["POSs"] = POSs;
-                File.WriteAllText(fileName, System.Text.Json.JsonSerializer.Serialize(jsonObject, new JsonSerializerOptions { WriteIndented = true }));
+                File.WriteAllText(fileName, JsonSerializer.Serialize(jsonObject, new JsonSerializerOptions { WriteIndented = true }));
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace CustomerQueuingSystem
                 var jobject = JsonNode.Parse(jsonString);
 
                 var showStartScreenSection = jobject?["ShowStartScreen"];
-                bool showStartScreen = System.Text.Json.JsonSerializer.Deserialize<bool>(showStartScreenSection);
+                bool showStartScreen = JsonSerializer.Deserialize<bool>(showStartScreenSection);
                 
                 return showStartScreen;
             }
@@ -127,6 +127,27 @@ namespace CustomerQueuingSystem
 
                 string[] storeInfo = { "", "" };
                 return storeInfo;
+            }
+        }
+
+        //returns whether or not the store should run the simulation
+        public static bool GetRunSimulation()
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(fileName);
+                var jobject = JsonNode.Parse(jsonString);
+
+                var section = jobject?["ShowStartScreen"];
+                bool runSimulation = JsonSerializer.Deserialize<bool>(section);
+
+                return runSimulation;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error reading or deserializing JSON: " + ex.Message);
+
+                return true;
             }
         }
     }

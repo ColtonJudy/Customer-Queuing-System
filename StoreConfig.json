@@ -2,6 +2,7 @@
   "ShowStartScreen": true,
   "StoreName": "CQS",
   "WelcomeText": "Welcome to the Customer Queuing System!",
+  "RunSimulation": true,
   "POSs": [
     {
       "POSNumber": 100,
