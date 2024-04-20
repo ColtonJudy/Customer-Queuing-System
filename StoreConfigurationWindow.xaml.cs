@@ -26,6 +26,7 @@ namespace CustomerQueuingSystem
     {
         //stores the POSs while the system is being configured
         List<POS> tempPOSList;
+        int POSBeingEditedIndex = -1;
 
         private static readonly Regex textRegex = new Regex(@"^\d{0,4}$");
 
@@ -88,17 +89,33 @@ namespace CustomerQueuingSystem
             CustomerMaxTextBox.Clear();
         }
 
+        //creates a POS from the entered values
+        private POS CreatePOSFromFields()
+        {
+            int posNumber = int.Parse(POSNumberTextBox.Text);
+            bool acceptsCash = AcceptsCashCheckBox.IsChecked ?? true;
+            bool acceptsCard = AcceptsCardCheckBox.IsChecked ?? true;
+            CheckoutType checkoutType = (CheckoutType)CheckoutTypeComboBox.SelectedIndex;
+            bool isExpress = CheckoutTypeComboBox.SelectedIndex == 2;
+            int customerMax = int.Parse(CustomerMaxTextBox.Text);
+
+            POS pos = new POS(posNumber, acceptsCash, acceptsCard, checkoutType, isExpress, CheckoutState.Open, customerMax);
+            return pos;
+        }
+
         private void AddNewButton_Click(object sender, RoutedEventArgs e)
         {
             DeleteRegisterButton.Visibility = Visibility.Collapsed;
             EditPanel.Visibility = Visibility.Visible;
+            AddRegisterButton.Visibility = Visibility.Visible;
+            SaveRegisterButton.Visibility = Visibility.Collapsed;
             ResetFields();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            int selectedPOSIndex = CurrentRegistersListView.SelectedIndex;
-            POS selectedPOS = tempPOSList[selectedPOSIndex];
+            POSBeingEditedIndex= CurrentRegistersListView.SelectedIndex;
+            POS selectedPOS = tempPOSList[POSBeingEditedIndex];
 
             POSNumberTextBox.Text = selectedPOS.POSNumber.ToString();
             AcceptsCashCheckBox.IsChecked = selectedPOS.AcceptsCash;
@@ -108,6 +125,80 @@ namespace CustomerQueuingSystem
 
             EditPanel.Visibility = Visibility.Visible;
             DeleteRegisterButton.Visibility = Visibility.Visible;
+            SaveRegisterButton.Visibility = Visibility.Visible;
+            AddRegisterButton.Visibility = Visibility.Collapsed;
+        }
+
+        //updates an existing register and saves it to the tempPOSList
+        private void SaveRegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(POSNumberTextBox.Text == "" || CustomerMaxTextBox.Text == "")
+            {
+                ErrorLabel2.Content = "All fields must have a value";
+                return;
+            }
+
+            //create a POS from the entered values
+            POS pos = CreatePOSFromFields();
+
+            tempPOSList[POSBeingEditedIndex] = pos;
+            tempPOSList.Sort((x, y) => x.POSNumber.CompareTo(y.POSNumber)); //sort the list so that the POS numbers are always in ascending order
+
+            CurrentRegistersListView.Items.Refresh();
+
+            EditPanel.Visibility = Visibility.Collapsed;
+            DeleteRegisterButton.Visibility = Visibility.Collapsed;
+            SaveRegisterButton.Visibility = Visibility.Collapsed;
+
+            ResetFields();
+        }
+
+        //adds a new register and saves it to the tempPOSList
+        private void AddRegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (POSNumberTextBox.Text == "" || CustomerMaxTextBox.Text == "")
+            {
+                ErrorLabel2.Content = "All fields must have a value";
+                return;
+            }
+
+            //create a POS from the entered values
+            POS pos = CreatePOSFromFields();
+
+            //check to see if there is already a POS with this POSNumber. If not, then add it
+            int index = tempPOSList.FindIndex(p => p.POSNumber == pos.POSNumber);
+
+            if (index >= 0)
+            {
+                ErrorLabel2.Content = "All POSs must have a unique POS Number";
+                return;
+            }
+            else
+            {
+                tempPOSList.Add(pos);
+                tempPOSList.Sort((x, y) => x.POSNumber.CompareTo(y.POSNumber)); //sort the list so that the POS numbers are always in ascending order
+            }
+
+            CurrentRegistersListView.Items.Refresh();
+
+            EditPanel.Visibility = Visibility.Collapsed;
+            DeleteRegisterButton.Visibility = Visibility.Collapsed;
+            AddRegisterButton.Visibility = Visibility.Collapsed;
+
+            ResetFields();
+        }
+
+        private void DeleteRegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedPOSIndex = CurrentRegistersListView.SelectedIndex;
+            POS selectedPOS = tempPOSList[selectedPOSIndex];
+            tempPOSList.Remove(selectedPOS);
+
+            CurrentRegistersListView.Items.Refresh();
+
+            EditPanel.Visibility = Visibility.Collapsed;
+            DeleteRegisterButton.Visibility = Visibility.Collapsed;
+            ResetFields();
         }
 
         private void SaveAndStartButton_Click(object sender, RoutedEventArgs e)
@@ -115,7 +206,7 @@ namespace CustomerQueuingSystem
 
             //copy logo image into resource directory (This copies it into the .\bin\debug folder used at runtime)
             //TODO: figure out how to put image directly into the project "Images" directory
-            if(LogoPathTextbox.Text != "")
+            if (LogoPathTextbox.Text != "")
             {
                 try
                 {
@@ -139,57 +230,6 @@ namespace CustomerQueuingSystem
             CQSWindow CQSWindow = new CQSWindow();
             CQSWindow.Show();
             Close();
-        }
-
-        private void SaveRegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(POSNumberTextBox.Text == "" || CustomerMaxTextBox.Text == "")
-            {
-                ErrorLabel2.Content = "All fields must have a value";
-                return;
-            }
-
-            //create a POS from the entered values
-            int posNumber = int.Parse(POSNumberTextBox.Text);
-            bool acceptsCash = AcceptsCashCheckBox.IsChecked ?? true;
-            bool acceptsCard = AcceptsCardCheckBox.IsChecked ?? true;
-            CheckoutType checkoutType = (CheckoutType)CheckoutTypeComboBox.SelectedIndex;
-            bool isExpress = CheckoutTypeComboBox.SelectedIndex == 2;
-            int customerMax = int.Parse(CustomerMaxTextBox.Text);
-
-            POS pos = new POS(posNumber, acceptsCash, acceptsCard, checkoutType, isExpress, CheckoutState.Open, customerMax);
-
-            //if the POS already exists in the system, we update it. Otherwise, add a new POS
-            int index = tempPOSList.FindIndex(p => p.POSNumber == pos.POSNumber);
-            if (index >= 0)
-            {
-                tempPOSList[index] = pos;
-            }
-            else
-            {
-                tempPOSList.Add(pos);
-                tempPOSList.Sort((x, y) => x.POSNumber.CompareTo(y.POSNumber)); //sort the list so that the POS numbers are always in ascending order
-            }
-
-            CurrentRegistersListView.Items.Refresh();
-
-            EditPanel.Visibility = Visibility.Collapsed;
-            DeleteRegisterButton.Visibility = Visibility.Collapsed;
-
-            ResetFields();
-        }
-
-        private void DeleteRegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            int selectedPOSIndex = CurrentRegistersListView.SelectedIndex;
-            POS selectedPOS = tempPOSList[selectedPOSIndex];
-            tempPOSList.Remove(selectedPOS);
-
-            CurrentRegistersListView.Items.Refresh();
-
-            EditPanel.Visibility = Visibility.Collapsed;
-            DeleteRegisterButton.Visibility = Visibility.Collapsed;
-            ResetFields();
         }
     }
 }

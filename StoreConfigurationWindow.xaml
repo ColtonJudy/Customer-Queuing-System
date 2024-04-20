@@ -116,9 +116,13 @@
                 <TextBox Grid.Row="5" Grid.Column="1" x:Name="CustomerMaxTextBox" VerticalAlignment="Center" PreviewTextInput="PreviewInput" FontSize="18" />
 
                 <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ErrorLabel2" Content="" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" />
+                
+                <!-- The AddRegisterButton is shown when we have selected to add a new register,
+                and the SaveRegisterButton and DeleteRegisterButton are shown when we have selected to edit a preexisting register. -->
+                <Button Grid.Row="7" Grid.Column="0" x:Name="AddRegisterButton" Content="Add Register" FontSize="18" Margin="0,10,10,10" Click="AddRegisterButton_Click" Visibility="Collapsed"/>
 
-                <Button Grid.Row="7" Grid.Column="0" x:Name="SaveRegisterButton" Content="Save Register" FontSize="18" Margin="0,10,10,10" Click="SaveRegisterButton_Click"/>
-                <Button Grid.Row="7" Grid.Column="1" x:Name="DeleteRegisterButton" Visibility="Collapsed" Content="Delete Register" FontSize="18" Margin="0,10,10,10" Click="DeleteRegisterButton_Click"/>
+                <Button Grid.Row="7" Grid.Column="0" x:Name="SaveRegisterButton" Content="Save Register" FontSize="18" Margin="0,10,10,10" Click="SaveRegisterButton_Click" Visibility="Collapsed"/>
+                <Button Grid.Row="7" Grid.Column="1" x:Name="DeleteRegisterButton" Content="Delete Register" FontSize="18" Margin="0,10,10,10" Click="DeleteRegisterButton_Click" Visibility="Collapsed"/>
             </Grid>
         </StackPanel>
     </Grid>
