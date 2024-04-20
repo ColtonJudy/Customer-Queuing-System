@@ -1,32 +1,12 @@
 {
   "ShowStartScreen": true,
   "StoreName": "CQS",
-  "WelcomeText": "Welcome to the Customer Queuing System!",
+  "WelcomeText": "Welcome to CQS",
   "RunSimulation": true,
   "POSs": [
     {
       "POSNumber": 100,
-      "AcceptsCash": true,
-      "AcceptsCard": true,
-      "CheckoutType": 0,
-      "IsExpress": false,
-      "CheckoutState": 0,
-      "MaxCustomerCount": 1,
-      "Customers": []
-    },
-    {
-      "POSNumber": 101,
-      "AcceptsCash": true,
-      "AcceptsCard": true,
-      "CheckoutType": 0,
-      "IsExpress": false,
-      "CheckoutState": 0,
-      "MaxCustomerCount": 1,
-      "Customers": []
-    },
-    {
-      "POSNumber": 102,
-      "AcceptsCash": true,
+      "AcceptsCash": false,
       "AcceptsCard": true,
       "CheckoutType": 0,
       "IsExpress": false,
@@ -37,59 +17,9 @@
     {
       "POSNumber": 200,
       "AcceptsCash": true,
-      "AcceptsCard": true,
+      "AcceptsCard": false,
       "CheckoutType": 1,
       "IsExpress": false,
-      "CheckoutState": 0,
-      "MaxCustomerCount": 3,
-      "Customers": []
-    },
-    {
-      "POSNumber": 201,
-      "AcceptsCash": true,
-      "AcceptsCard": true,
-      "CheckoutType": 1,
-      "IsExpress": false,
-      "CheckoutState": 0,
-      "MaxCustomerCount": 3,
-      "Customers": []
-    },
-    {
-      "POSNumber": 202,
-      "AcceptsCash": false,
-      "AcceptsCard": true,
-      "CheckoutType": 1,
-      "IsExpress": false,
-      "CheckoutState": 0,
-      "MaxCustomerCount": 3,
-      "Customers": []
-    },
-    {
-      "POSNumber": 300,
-      "AcceptsCash": true,
-      "AcceptsCard": true,
-      "CheckoutType": 2,
-      "IsExpress": true,
-      "CheckoutState": 0,
-      "MaxCustomerCount": 3,
-      "Customers": []
-    },
-    {
-      "POSNumber": 301,
-      "AcceptsCash": true,
-      "AcceptsCard": true,
-      "CheckoutType": 2,
-      "IsExpress": true,
-      "CheckoutState": 0,
-      "MaxCustomerCount": 3,
-      "Customers": []
-    },
-    {
-      "POSNumber": 302,
-      "AcceptsCash": true,
-      "AcceptsCard": true,
-      "CheckoutType": 2,
-      "IsExpress": true,
       "CheckoutState": 0,
       "MaxCustomerCount": 3,
       "Customers": []

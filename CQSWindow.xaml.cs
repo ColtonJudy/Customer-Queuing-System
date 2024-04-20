@@ -123,7 +123,7 @@ namespace CustomerQueuingSystem
 
             RecommendedRegisterText.Text = recommendation;
 
-            await Task.Delay(5000);
+            await Task.Delay(2000);
 
             ThankYouScreen.Visibility = Visibility.Collapsed;
             NumOfItemsScreen.Visibility = Visibility.Visible;
