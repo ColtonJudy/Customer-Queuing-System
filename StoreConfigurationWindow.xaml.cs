@@ -38,6 +38,10 @@ namespace CustomerQueuingSystem
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            string[] storeInfo = Config.GetStoreInfo();
+            StoreNameTextbox.Text = storeInfo[0];
+            WelcomeTextTextbox.Text = storeInfo[1];
+
             //set the checkout type box to the checkout type enum in POS.cs
             CheckoutTypeComboBox.ItemsSource = Enum.GetValues(typeof(CheckoutType)).Cast<CheckoutType>();
             CheckoutTypeComboBox.SelectedIndex = 1;

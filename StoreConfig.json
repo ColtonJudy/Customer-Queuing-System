@@ -1,7 +1,7 @@
 {
   "ShowStartScreen": true,
   "StoreName": "CQS",
-  "WelcomeText": "Welcome to CQS",
+  "WelcomeText": "Welcome to CQS test",
   "RunSimulation": true,
   "POSs": [
     {
