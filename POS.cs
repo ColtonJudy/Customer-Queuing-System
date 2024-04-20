@@ -30,6 +30,8 @@ namespace CustomerQueuingSystem
     {
         private List<Customer> customers = new List<Customer>();
 
+        private int totalCustomersServed = 0;
+
         public int POSNumber { get; set; }
         public bool AcceptsCash { get; set; }
         public bool AcceptsCard { get; set; }
@@ -37,7 +39,6 @@ namespace CustomerQueuingSystem
         public bool IsExpress { get; set; }
         public CheckoutState CheckoutState { get; set; }
         public int MaxCustomerCount { get; set; }
-        public List<Customer> Customers { get { return customers; } }
 
         public POS()
         {
@@ -53,6 +54,27 @@ namespace CustomerQueuingSystem
             this.IsExpress = isExpress;
             this.CheckoutState = checkoutState;
             this.MaxCustomerCount = maxCustomerCount;
+        }
+
+        public int CustomerCount()
+        {
+            return customers.Count;
+        }
+
+        public int TotalCustomersServed()
+        {
+            return totalCustomersServed;
+        }
+
+        public void AddCustomer(Customer customer)
+        {
+            totalCustomersServed++;
+            customers.Add(customer);
+        }
+
+        public void DeleteCustomer(Customer customer)
+        {
+            customers.Remove(customer);
         }
 
         public override string ToString()

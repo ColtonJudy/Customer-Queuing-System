@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,13 +31,13 @@ namespace CustomerQueuingSystem
 
                 if(customer.checkoutChoice == CheckoutType.SCO)
                 {
-                    store.SCO_POSList[bestPOSNum].Customers.Add(customer);
+                    store.SCO_POSList[bestPOSNum].AddCustomer(customer);
 
                     return "Please go to self-checkout register #" + store.SCO_POSList[bestPOSNum].POSNumber;
                 }
                 else
                 {
-                    store.CashierPOSList[bestPOSNum].Customers.Add(customer);
+                    store.CashierPOSList[bestPOSNum].AddCustomer(customer);
 
                     return "Please go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
                 }
@@ -57,7 +58,7 @@ namespace CustomerQueuingSystem
                 {
                     if (store.SCO_POSList[i].AcceptsPaymentType(customerPaymentChoice))
                     {
-                        if (store.SCO_POSList[i].Customers.Count() == 0)
+                        if (store.SCO_POSList[i].CustomerCount() == 0)
                         {
                             return i;
                         }
@@ -83,10 +84,10 @@ namespace CustomerQueuingSystem
                         {
                             if (store.CashierPOSList[i].AcceptsPaymentType(customerPaymentChoice))
                             {
-                                if (store.CashierPOSList[i].Customers.Count() < 3 && store.CashierPOSList[i].Customers.Count() < currBestLaneNumOfCustomers)
+                                if (store.CashierPOSList[i].CustomerCount() < 3 && store.CashierPOSList[i].CustomerCount() < currBestLaneNumOfCustomers)
                                 {
                                     currBestLane = i;
-                                    currBestLaneNumOfCustomers = store.CashierPOSList[i].Customers.Count();
+                                    currBestLaneNumOfCustomers = store.CashierPOSList[i].CustomerCount();
                                 }
                             }
                         }
@@ -94,10 +95,10 @@ namespace CustomerQueuingSystem
                         {
                             if (store.CashierPOSList[i].AcceptsPaymentType(customerPaymentChoice))
                             {
-                                if (store.CashierPOSList[i].Customers.Count() < 3 && store.CashierPOSList[i].Customers.Count() + 1 < currBestLaneNumOfCustomers)
+                                if (store.CashierPOSList[i].CustomerCount() < 3 && store.CashierPOSList[i].CustomerCount() + 1 < currBestLaneNumOfCustomers)
                                 {
                                     currBestLane = i;
-                                    currBestLaneNumOfCustomers = store.CashierPOSList[i].Customers.Count() + 1;
+                                    currBestLaneNumOfCustomers = store.CashierPOSList[i].CustomerCount() + 1;
                                 }
                             }
                         }
@@ -108,10 +109,10 @@ namespace CustomerQueuingSystem
                     {
                         if (store.CashierPOSList[i].AcceptsPaymentType(customerPaymentChoice))
                         {
-                            if (store.CashierPOSList[i].Customers.Count() < 3 && store.CashierPOSList[i].Customers.Count() < currBestLaneNumOfCustomers)
+                            if (store.CashierPOSList[i].CustomerCount() < 3 && store.CashierPOSList[i].CustomerCount() < currBestLaneNumOfCustomers)
                             {
                                 currBestLane = i;
-                                currBestLaneNumOfCustomers = store.CashierPOSList[i].Customers.Count();
+                                currBestLaneNumOfCustomers = store.CashierPOSList[i].CustomerCount();
                             }
                         }
                     }
@@ -131,7 +132,7 @@ namespace CustomerQueuingSystem
 
                 if(bestPOSNum >= 0)
                 {
-                    store.CashierPOSList[bestPOSNum].Customers.Add(customer);
+                    store.CashierPOSList[bestPOSNum].AddCustomer(customer);
                     return "Sorry for the inconvenience. If you would like to checkout sooner, go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
                 }
             }
@@ -142,7 +143,7 @@ namespace CustomerQueuingSystem
 
                 if (bestPOSNum >= 0)
                 {
-                    store.SCO_POSList[bestPOSNum].Customers.Add(customer);
+                    store.SCO_POSList[bestPOSNum].AddCustomer(customer);
                     return "Sorry for the inconvenience. If you would like to checkout sooner, go to SCO register #" + store.SCO_POSList[bestPOSNum].POSNumber;
                 }
             }
@@ -158,7 +159,7 @@ namespace CustomerQueuingSystem
 
                     if (bestPOSNum >= 0)
                     {
-                        store.SCO_POSList[bestPOSNum].Customers.Add(customer);
+                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with cash, go to register #" + store.SCO_POSList[bestPOSNum].POSNumber;
                     }
@@ -169,7 +170,7 @@ namespace CustomerQueuingSystem
 
                     if (bestPOSNum >= 0)
                     {
-                        store.CashierPOSList[bestPOSNum].Customers.Add(customer);
+                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with cash, go to register #" + store.CashierPOSList[bestPOSNum].POSNumber;
                     }
@@ -188,7 +189,7 @@ namespace CustomerQueuingSystem
 
                     if(bestPOSNum >= 0)
                     {
-                        store.SCO_POSList[bestPOSNum].Customers.Add(customer);
+                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with card, go to register #" + store.SCO_POSList[bestPOSNum].POSNumber;
                     }
@@ -199,7 +200,7 @@ namespace CustomerQueuingSystem
 
                     if (bestPOSNum >= 0)
                     {
-                        store.CashierPOSList[bestPOSNum].Customers.Add(customer);
+                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with card, go to register #" + store.CashierPOSList[bestPOSNum].POSNumber;
                     }
@@ -216,7 +217,7 @@ namespace CustomerQueuingSystem
 
                     if (bestPOSNum >= 0)
                     {
-                        store.CashierPOSList[bestPOSNum].Customers.Add(customer);
+                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CARD, go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
                     }
@@ -227,7 +228,7 @@ namespace CustomerQueuingSystem
 
                     if (bestPOSNum >= 0)
                     {
-                        store.CashierPOSList[bestPOSNum].Customers.Add(customer);
+                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CASH, go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
                     }
@@ -241,7 +242,7 @@ namespace CustomerQueuingSystem
 
                     if (bestPOSNum >= 0)
                     {
-                        store.SCO_POSList[bestPOSNum].Customers.Add(customer);
+                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CARD, go to SCO register #" + store.SCO_POSList[bestPOSNum].POSNumber;
                     }
@@ -252,7 +253,7 @@ namespace CustomerQueuingSystem
 
                     if (bestPOSNum >= 0)
                     {
-                        store.SCO_POSList[bestPOSNum].Customers.Add(customer);
+                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
 
                         return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CASH, go to SCO register #" + store.SCO_POSList[bestPOSNum].POSNumber;
                     }
@@ -264,6 +265,28 @@ namespace CustomerQueuingSystem
             //TODO: UPDATE SIMULATION
 
             return "Could not find desired POS. Alerting Store Associate";
+        }
+
+        public static void PrintResultsToFile(Store store)
+        {
+            using (StreamWriter streamWriter = new StreamWriter("log.txt"))
+            {
+                streamWriter.WriteLine("CQS Results for " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + "\n");
+
+                streamWriter.WriteLine("Total Customers Served: \n");
+
+                streamWriter.WriteLine("Cashiers");
+                foreach (POS cashier in store.CashierPOSList)
+                {
+                    streamWriter.WriteLine(cashier + ": " + cashier.TotalCustomersServed());
+                }
+
+                streamWriter.WriteLine("\nSCOs");
+                foreach (POS SCO in store.SCO_POSList)
+                {
+                    streamWriter.WriteLine(SCO + ": " + SCO.TotalCustomersServed());
+                }
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -28,7 +29,7 @@ namespace CustomerQueuingSystem
         //starts the simulation
         public void Start()
         {
-            PrintSim();
+            PrintSimToConsole();
         }
 
         //updates the simulation object with any changes to the store
@@ -36,17 +37,17 @@ namespace CustomerQueuingSystem
         {
             this.store = store;
 
-            PrintSim();
+            PrintSimToConsole();
         }
 
-        private void PrintSim()
+        private void PrintSimToConsole()
         {
             Console.Clear();
             Console.WriteLine("Cashiers\n");
             foreach (POS cashier in store.CashierPOSList)
             {
                 Console.Write(cashier + ": ");
-                for (int i = 0; i < cashier.Customers.Count; i++)
+                for (int i = 0; i < cashier.CustomerCount(); i++)
                 {
                     Console.Write("X");
                 }
@@ -54,10 +55,10 @@ namespace CustomerQueuingSystem
             }
 
             Console.WriteLine("\nSelf Checkout\n");
-            foreach (POS cashier in store.SCO_POSList)
+            foreach (POS SCO in store.SCO_POSList)
             {
-                Console.Write(cashier + ": ");
-                for (int i = 0; i < cashier.Customers.Count; i++)
+                Console.Write(SCO + ": ");
+                for (int i = 0; i < SCO.CustomerCount(); i++)
                 {
                     Console.Write("X");
                 }

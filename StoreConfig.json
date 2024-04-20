@@ -11,8 +11,7 @@
       "CheckoutType": 0,
       "IsExpress": false,
       "CheckoutState": 0,
-      "MaxCustomerCount": 1,
-      "Customers": []
+      "MaxCustomerCount": 1
     },
     {
       "POSNumber": 200,
@@ -21,8 +20,16 @@
       "CheckoutType": 1,
       "IsExpress": false,
       "CheckoutState": 0,
-      "MaxCustomerCount": 3,
-      "Customers": []
+      "MaxCustomerCount": 3
+    },
+    {
+      "POSNumber": 201,
+      "AcceptsCash": true,
+      "AcceptsCard": true,
+      "CheckoutType": 1,
+      "IsExpress": false,
+      "CheckoutState": 0,
+      "MaxCustomerCount": 3
     }
   ]
 }

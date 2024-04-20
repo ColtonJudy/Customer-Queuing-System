@@ -49,6 +49,12 @@ namespace CustomerQueuingSystem
             WelcomeText.Text = storeInfo[1];
         }
 
+
+        private void Window_Closing(object sender, EventArgs e)
+        {
+            CQS.PrintResultsToFile(store);
+        }
+
         private void ExpressButton_Click(object sender, RoutedEventArgs e)
         {
             isExpress = true;
