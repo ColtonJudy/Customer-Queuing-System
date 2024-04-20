@@ -72,9 +72,12 @@ namespace CustomerQueuingSystem
             customers.Add(customer);
         }
 
-        public void DeleteCustomer(Customer customer)
+        public void DeleteCustomer()
         {
-            customers.Remove(customer);
+            if(customers.Count != 0)
+            {
+                customers.RemoveAt(0);
+            }
         }
 
         public override string ToString()

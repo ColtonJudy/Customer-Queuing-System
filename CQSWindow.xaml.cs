@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,8 @@ namespace CustomerQueuingSystem
             {
                 simulation = new Simulation(store);
                 simulation.Start();
+                SimMenu.Visibility = Visibility.Visible;
+                PopulateSimMenu();
             }
         }
 
@@ -49,6 +52,139 @@ namespace CustomerQueuingSystem
             WelcomeText.Text = storeInfo[1];
         }
 
+        private void PopulateSimMenu()
+        {
+            //populating remove customer menu item
+            for(int i = 0; i < store.SCO_POSList.Count(); i++)
+            {
+                int index = i;
+                MenuItem menuItem = new MenuItem();
+                menuItem.Header = store.SCO_POSList[index].ToString();
+                menuItem.Click += new RoutedEventHandler(
+                    (sendItem, args) =>
+                        {
+                            store.SCO_POSList[index].DeleteCustomer();
+                            simulation.Update(store);
+                        }
+                    );
+
+                RemoveCustomerMenuItem.Items.Add(menuItem);
+            }
+            for (int i = 0; i < store.CashierPOSList.Count(); i++)
+            {
+                int index = i;
+                MenuItem menuItem = new MenuItem();
+                menuItem.Header = store.CashierPOSList[index].ToString();
+                menuItem.Click += new RoutedEventHandler(
+                    (sendItem, args) =>
+                        {
+                            store.CashierPOSList[index].DeleteCustomer();
+                            simulation.Update(store);
+                        }
+                    );
+
+                RemoveCustomerMenuItem.Items.Add(menuItem);
+            }
+
+            //populate checkout state menu item
+            for (int i = 0; i < store.SCO_POSList.Count(); i++)
+            {
+                int index = i;
+
+                MenuItem menuItem = new MenuItem();
+
+                if(store.SCO_POSList[index].CheckoutState == CheckoutState.Open)
+                {
+                    menuItem.Header = "Close " + store.SCO_POSList[index].ToString();
+                }
+                else if(store.SCO_POSList[index].CheckoutState == CheckoutState.Closed)
+                {
+                    menuItem.Header = "Open " + store.SCO_POSList[index].ToString();
+                }
+                else
+                {
+                    menuItem.Header = "Undelay " + store.SCO_POSList[index].ToString();
+                }
+
+                menuItem.Click += new RoutedEventHandler(
+                    (sendItem, args) =>
+                        {
+                            if (store.SCO_POSList[index].CheckoutState == CheckoutState.Open)
+                            {
+                                if (store.SCO_POSList[index].CustomerCount() == 0)
+                                {
+                                    store.SCO_POSList[index].CheckoutState = CheckoutState.Closed;
+                                    menuItem.Header = "Open " + store.SCO_POSList[index].ToString();
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Error: Cannot close a POS with customers", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+                            else
+                            {
+                                store.SCO_POSList[index].CheckoutState = CheckoutState.Open;
+                                menuItem.Header = "Close " + store.SCO_POSList[index].ToString();
+                            }
+
+                            simulation.Update(store);
+                        }
+                    );
+
+                CheckoutStateMenuItem.Items.Add(menuItem);
+            }
+            for (int i = 0; i < store.CashierPOSList.Count(); i++)
+            {
+                int index = i;
+
+                MenuItem menuItem = new MenuItem();
+
+                if (store.CashierPOSList[index].CheckoutState == CheckoutState.Open)
+                {
+                    menuItem.Header = "Close " + store.CashierPOSList[index].ToString();
+                }
+                else if (store.CashierPOSList[index].CheckoutState == CheckoutState.Closed)
+                {
+                    menuItem.Header = "Open " + store.CashierPOSList[index].ToString();
+                }
+                else
+                {
+                    menuItem.Header = "Undelay " + store.CashierPOSList[index].ToString();
+                }
+
+                menuItem.Click += new RoutedEventHandler(
+                    (sendItem, args) =>
+                    {
+                        if (store.CashierPOSList[index].CheckoutState == CheckoutState.Open)
+                        {
+                            if (store.CashierPOSList[index].CustomerCount() == 0)
+                            {
+                                store.CashierPOSList[index].CheckoutState = CheckoutState.Closed;
+                                menuItem.Header = "Open " + store.CashierPOSList[index].ToString();
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Error: Cannot close a POS with customers", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                        else
+                        {
+                            store.CashierPOSList[index].CheckoutState = CheckoutState.Open;
+                            menuItem.Header = "Close " + store.CashierPOSList[index].ToString();
+                        }
+
+                        simulation.Update(store);
+                    }
+                    );
+
+                CheckoutStateMenuItem.Items.Add(menuItem);
+            }
+        }
+
+        private void RemoveCustomersMenuSubItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void Window_Closing(object sender, EventArgs e)
         {

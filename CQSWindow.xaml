@@ -8,7 +8,20 @@
         Title="CQSWindow" Height="450" Width="800"
         Closing="Window_Closing">
     <Grid>
-        <StackPanel x:Name= "NumOfItemsScreen" Visibility="Visible">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0" Grid.ColumnSpan="4" x:Name="SimMenu" Visibility="Hidden">
+            <MenuItem Header="Sim Options">
+                <MenuItem x:Name="RemoveCustomerMenuItem" Header="Remove Customer From POS"/>
+                <MenuItem x:Name="CheckoutStateMenuItem" Header="Change Checkout State of POS"/>
+            </MenuItem>
+        </Menu>
+        
+        <StackPanel Grid.Row="1" x:Name= "NumOfItemsScreen" Visibility="Visible">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -35,7 +48,7 @@
                 <Button Grid.Column="2" Grid.Row="5" x:Name="NonExpressButton" Content="No" Margin="10, 20" FontSize="18" Click="NonExpressButton_Click"/>
             </Grid>
         </StackPanel>
-        <StackPanel x:Name= "POSTypeScreen" Visibility="Collapsed">
+        <StackPanel Grid.Row="1" x:Name= "POSTypeScreen" Visibility="Collapsed">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -60,7 +73,7 @@
                 <Button Grid.Column="2" Grid.Row="4" x:Name="RegularCheckoutButton" Content="Cashier" Margin="10, 20" FontSize="18" Click="RegularCheckoutButton_Click"/>
             </Grid>
         </StackPanel>
-        <StackPanel x:Name= "PaymentTypeScreen" Visibility="Collapsed">
+        <StackPanel Grid.Row="1" x:Name= "PaymentTypeScreen" Visibility="Collapsed">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -86,7 +99,7 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel x:Name= "ThankYouScreen" Visibility="Collapsed">
+        <StackPanel Grid.Row="1" x:Name= "ThankYouScreen" Visibility="Collapsed">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

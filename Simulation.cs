@@ -46,7 +46,7 @@ namespace CustomerQueuingSystem
             Console.WriteLine("Cashiers\n");
             foreach (POS cashier in store.CashierPOSList)
             {
-                Console.Write(cashier + ": ");
+                Console.Write(cashier + "(" + cashier.CheckoutState + ", Accepts Cash = "  + cashier.AcceptsCash + ", Accepts Card = " + cashier.AcceptsCard + "): ");
                 for (int i = 0; i < cashier.CustomerCount(); i++)
                 {
                     Console.Write("X");
@@ -57,7 +57,7 @@ namespace CustomerQueuingSystem
             Console.WriteLine("\nSelf Checkout\n");
             foreach (POS SCO in store.SCO_POSList)
             {
-                Console.Write(SCO + ": ");
+                Console.Write(SCO + "(" + SCO.CheckoutState + ", Accepts Cash = " + SCO.AcceptsCash + ", Accepts Card = " + SCO.AcceptsCard + "): ");
                 for (int i = 0; i < SCO.CustomerCount(); i++)
                 {
                     Console.Write("X");

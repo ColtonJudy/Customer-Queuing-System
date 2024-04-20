@@ -1,20 +1,29 @@
 {
   "ShowStartScreen": true,
-  "StoreName": "CQS",
-  "WelcomeText": "Welcome to CQS test",
-  "RunSimulation": true,
+  "StoreName": "Sample Store",
+  "WelcomeText": "Welcome Text",
+  "RunSimulation": false,
   "POSs": [
     {
       "POSNumber": 100,
-      "AcceptsCash": false,
+      "AcceptsCash": true,
       "AcceptsCard": true,
-      "CheckoutType": 0,
+      "CheckoutType": 1,
       "IsExpress": false,
       "CheckoutState": 0,
-      "MaxCustomerCount": 1
+      "MaxCustomerCount": 3
     },
     {
-      "POSNumber": 200,
+      "POSNumber": 101,
+      "AcceptsCash": false,
+      "AcceptsCard": true,
+      "CheckoutType": 1,
+      "IsExpress": false,
+      "CheckoutState": 0,
+      "MaxCustomerCount": 3
+    },
+    {
+      "POSNumber": 102,
       "AcceptsCash": true,
       "AcceptsCard": false,
       "CheckoutType": 1,
@@ -23,13 +32,49 @@
       "MaxCustomerCount": 3
     },
     {
-      "POSNumber": 201,
+      "POSNumber": 103,
       "AcceptsCash": true,
       "AcceptsCard": true,
-      "CheckoutType": 1,
-      "IsExpress": false,
+      "CheckoutType": 2,
+      "IsExpress": true,
       "CheckoutState": 0,
       "MaxCustomerCount": 3
+    },
+    {
+      "POSNumber": 200,
+      "AcceptsCash": true,
+      "AcceptsCard": true,
+      "CheckoutType": 0,
+      "IsExpress": false,
+      "CheckoutState": 0,
+      "MaxCustomerCount": 1
+    },
+    {
+      "POSNumber": 201,
+      "AcceptsCash": true,
+      "AcceptsCard": false,
+      "CheckoutType": 0,
+      "IsExpress": false,
+      "CheckoutState": 0,
+      "MaxCustomerCount": 1
+    },
+    {
+      "POSNumber": 202,
+      "AcceptsCash": false,
+      "AcceptsCard": true,
+      "CheckoutType": 0,
+      "IsExpress": false,
+      "CheckoutState": 0,
+      "MaxCustomerCount": 1
+    },
+    {
+      "POSNumber": 203,
+      "AcceptsCash": true,
+      "AcceptsCard": true,
+      "CheckoutType": 0,
+      "IsExpress": false,
+      "CheckoutState": 0,
+      "MaxCustomerCount": 1
     }
   ]
 }
