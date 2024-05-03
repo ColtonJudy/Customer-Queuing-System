@@ -17,11 +17,11 @@ namespace CustomerQueuingSystem
             //get the best POS index
             if(customer.checkoutChoice == CheckoutType.SCO)
             {
-                bestPOSNum = checkSCO_POSs(customer.paymentChoice, store);
+                bestPOSNum = CheckSCO_POSs(customer.paymentChoice, store);
             }
             else
             {
-                bestPOSNum = checkCashierPOSs(customer.paymentChoice, customer.checkoutChoice, store);
+                bestPOSNum = CheckCashierPOSs(customer.paymentChoice, customer.checkoutChoice, store);
             }
 
             //if the desired POS is found
@@ -50,7 +50,7 @@ namespace CustomerQueuingSystem
         }
 
         //returns index of POS to be used. Returns -1 if none were found
-        public static int checkSCO_POSs(PaymentType customerPaymentChoice, Store store)
+        public static int CheckSCO_POSs(PaymentType customerPaymentChoice, Store store)
         {
             for (int i = 0; i < store.SCO_POSList.Count(); i++)
             {
@@ -68,7 +68,7 @@ namespace CustomerQueuingSystem
             return -1;
         }
 
-        public static int checkCashierPOSs(PaymentType customerPaymentChoice, CheckoutType customerCheckoutChoice, Store store)
+        public static int CheckCashierPOSs(PaymentType customerPaymentChoice, CheckoutType customerCheckoutChoice, Store store)
         {
             int currBestLane = -1;
             int currBestLaneNumOfCustomers = 3;
@@ -120,143 +120,70 @@ namespace CustomerQueuingSystem
             }
             return currBestLane;
         }
-
+        
+        private static PaymentType SwapPaymentType(PaymentType paymentType)
+        {
+            if (paymentType == PaymentType.Cash)
+                return PaymentType.Card;
+            else
+                return PaymentType.Cash;
+        }
+        
         //this method attempts to get the best possible POS, assuming that no ideal POS is found
         public static string GetRecommendedPOS(Customer customer, Store store)
         {
             //try switching checkout type
-            if(customer.checkoutChoice == CheckoutType.SCO)
-            {
-                //search for cashier POS instead
-                int bestPOSNum = checkCashierPOSs(customer.paymentChoice, CheckoutType.Cashier, store);
+            int bestPOSNum1 = (customer.checkoutChoice == CheckoutType.SCO) ? CheckCashierPOSs(customer.paymentChoice, CheckoutType.Cashier, store) : CheckSCO_POSs(customer.paymentChoice, store);
 
-                if(bestPOSNum >= 0)
+            if (bestPOSNum1 >= 0)
+            {
+                if (customer.checkoutChoice == CheckoutType.SCO)
                 {
-                    store.CashierPOSList[bestPOSNum].AddCustomer(customer);
-                    return "Sorry for the inconvenience. If you would like to checkout sooner, go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
+                    store.CashierPOSList[bestPOSNum1].AddCustomer(customer);
+                    return "Sorry for the inconvenience. If you would like to checkout sooner, go to CASHIER register #" + store.CashierPOSList[bestPOSNum1].POSNumber;
+                }
+                else
+                {
+                    store.SCO_POSList[bestPOSNum1].AddCustomer(customer);
+                    return "Sorry for the inconvenience. If you would like to checkout sooner, go to SCO register #" + store.SCO_POSList[bestPOSNum1].POSNumber;
                 }
             }
-            else
-            {
-                //search for SCO instead
-                int bestPOSNum = checkSCO_POSs(customer.paymentChoice, store);
-
-                if (bestPOSNum >= 0)
-                {
-                    store.SCO_POSList[bestPOSNum].AddCustomer(customer);
-                    return "Sorry for the inconvenience. If you would like to checkout sooner, go to SCO register #" + store.SCO_POSList[bestPOSNum].POSNumber;
-                }
-            }
-
+        
+        
             //if there is still no recommendation found, try switching payment type
-            if(customer.paymentChoice == PaymentType.Cash)
+            PaymentType swappedPaymentType = SwapPaymentType(customer.paymentChoice);
+        
+            int bestPOSNum2 = (customer.checkoutChoice == CheckoutType.SCO) ? CheckSCO_POSs(swappedPaymentType, store) : CheckCashierPOSs(swappedPaymentType, CheckoutType.Cashier, store);
+        
+            if (bestPOSNum2 >= 0)
             {
-                int bestPOSNum;
-
                 if (customer.checkoutChoice == CheckoutType.SCO)
                 {
-                    bestPOSNum = checkSCO_POSs(PaymentType.Cash, store);
-
-                    if (bestPOSNum >= 0)
-                    {
-                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with cash, go to register #" + store.SCO_POSList[bestPOSNum].POSNumber;
-                    }
+                    store.SCO_POSList[bestPOSNum2].AddCustomer(customer);
+                    return "Sorry for the inconvenience. If you can pay WITH " + swappedPaymentType.ToString().ToUpper() + ", go to SCO register #" + store.SCO_POSList[bestPOSNum2].POSNumber;
                 }
                 else
                 {
-                    bestPOSNum = checkCashierPOSs(PaymentType.Cash, customer.checkoutChoice, store);
-
-                    if (bestPOSNum >= 0)
-                    {
-                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with cash, go to register #" + store.CashierPOSList[bestPOSNum].POSNumber;
-                    }
+                    store.CashierPOSList[bestPOSNum2].AddCustomer(customer);
+                    return "Sorry for the inconvenience. If you can pay WITH " + swappedPaymentType.ToString().ToUpper() + ", go to CASHIER register #" + store.CashierPOSList[bestPOSNum2].POSNumber;
+        
                 }
-
-
-            }
-            //check for card
-            else
-            {
-                int bestPOSNum;
-
-                if (customer.checkoutChoice == CheckoutType.SCO)
-                {
-                    bestPOSNum = checkSCO_POSs(PaymentType.Card, store);
-
-                    if(bestPOSNum >= 0)
-                    {
-                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with card, go to register #" + store.SCO_POSList[bestPOSNum].POSNumber;
-                    }
-                }
-                else
-                {
-                    bestPOSNum = checkCashierPOSs(PaymentType.Card, customer.checkoutChoice, store);
-
-                    if (bestPOSNum >= 0)
-                    {
-                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay with card, go to register #" + store.CashierPOSList[bestPOSNum].POSNumber;
-                    }
-                }
-
             }
 
             //if there is still no recommendation found, switch both
-            if (customer.checkoutChoice == CheckoutType.SCO)
+            int bestPOSNum3 = (customer.checkoutChoice == CheckoutType.SCO) ? CheckCashierPOSs(swappedPaymentType, CheckoutType.Cashier, store) : CheckSCO_POSs(swappedPaymentType, store);
+
+            if (bestPOSNum3 >= 0)
             {
-                if (customer.paymentChoice == PaymentType.Cash)
+                if (customer.checkoutChoice == CheckoutType.SCO)
                 {
-                    int bestPOSNum = checkCashierPOSs(PaymentType.Card, CheckoutType.Cashier, store);
-
-                    if (bestPOSNum >= 0)
-                    {
-                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CARD, go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
-                    }
+                    store.CashierPOSList[bestPOSNum3].AddCustomer(customer);
+                    return "Sorry for the inconvenience. If you can pay WITH " + swappedPaymentType.ToString().ToUpper() + ", go to CASHIER register #" + store.CashierPOSList[bestPOSNum3].POSNumber;
                 }
                 else
                 {
-                    int bestPOSNum = checkCashierPOSs(PaymentType.Cash, CheckoutType.Cashier, store);
-
-                    if (bestPOSNum >= 0)
-                    {
-                        store.CashierPOSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CASH, go to cashier register #" + store.CashierPOSList[bestPOSNum].POSNumber;
-                    }
-                }
-            }
-            else
-            {
-                if (customer.paymentChoice == PaymentType.Cash)
-                {
-                    int bestPOSNum = checkSCO_POSs(PaymentType.Card, store);
-
-                    if (bestPOSNum >= 0)
-                    {
-                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CARD, go to SCO register #" + store.SCO_POSList[bestPOSNum].POSNumber;
-                    }
-                }
-                else
-                {
-                    int bestPOSNum = checkSCO_POSs(PaymentType.Cash, store);
-
-                    if (bestPOSNum >= 0)
-                    {
-                        store.SCO_POSList[bestPOSNum].AddCustomer(customer);
-
-                        return "Sorry for the inconvenience. If you would like to checkout sooner, and can pay WITH CASH, go to SCO register #" + store.SCO_POSList[bestPOSNum].POSNumber;
-                    }
+                    store.SCO_POSList[bestPOSNum3].AddCustomer(customer);
+                    return "Sorry for the inconvenience. If you can pay WITH " + swappedPaymentType.ToString().ToUpper() + ", go to SCO register #" + store.SCO_POSList[bestPOSNum3].POSNumber;
                 }
             }
 
