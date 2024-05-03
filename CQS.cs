@@ -261,9 +261,6 @@ namespace CustomerQueuingSystem
             }
 
             //otherwise, alert store associates that no recommendation was found
-
-            //TODO: UPDATE SIMULATION
-
             return "Could not find desired POS. Alerting Store Associate";
         }
 

@@ -2,7 +2,7 @@
   "ShowStartScreen": true,
   "StoreName": "Sample Store",
   "WelcomeText": "Welcome Text",
-  "RunSimulation": false,
+  "RunSimulation": true,
   "POSs": [
     {
       "POSNumber": 100,

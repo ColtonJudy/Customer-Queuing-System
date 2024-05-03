@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace CustomerQueuingSystem
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CQSWindow.xaml
     /// </summary>
     public partial class CQSWindow : Window
     {
@@ -45,6 +45,7 @@ namespace CustomerQueuingSystem
             }
         }
 
+        //loads the store title and welcome text from config
         private void LoadFromConfig()
         {
             string[] storeInfo = Config.GetStoreInfo();
@@ -52,115 +53,68 @@ namespace CustomerQueuingSystem
             WelcomeText.Text = storeInfo[1];
         }
 
+        //populates the top menu for the simulation mode
         private void PopulateSimMenu()
         {
+            PopulateRemoveCustomerMenuItem(store.SCO_POSList);
+            PopulateRemoveCustomerMenuItem(store.CashierPOSList);
+            PopulateCheckoutStateMenuItem(store.SCO_POSList);
+            PopulateCheckoutStateMenuItem(store.CashierPOSList);
+        }
+
+        //populates the remove customer menu
+        private void PopulateRemoveCustomerMenuItem(List<POS> posList)
+        {
             //populating remove customer menu item
-            for(int i = 0; i < store.SCO_POSList.Count(); i++)
+            for (int i = 0; i < posList.Count(); i++)
             {
                 int index = i;
                 MenuItem menuItem = new MenuItem();
-                menuItem.Header = store.SCO_POSList[index].ToString();
+                menuItem.Header = posList[index].ToString();
                 menuItem.Click += new RoutedEventHandler(
                     (sendItem, args) =>
-                        {
-                            store.SCO_POSList[index].DeleteCustomer();
-                            simulation.Update(store);
-                        }
+                    {
+                        posList[index].DeleteCustomer();
+                        simulation.Update(store);
+                    }
                     );
 
                 RemoveCustomerMenuItem.Items.Add(menuItem);
             }
-            for (int i = 0; i < store.CashierPOSList.Count(); i++)
-            {
-                int index = i;
-                MenuItem menuItem = new MenuItem();
-                menuItem.Header = store.CashierPOSList[index].ToString();
-                menuItem.Click += new RoutedEventHandler(
-                    (sendItem, args) =>
-                        {
-                            store.CashierPOSList[index].DeleteCustomer();
-                            simulation.Update(store);
-                        }
-                    );
+        }
 
-                RemoveCustomerMenuItem.Items.Add(menuItem);
-            }
-
+        //populates the checkout state menu
+        private void PopulateCheckoutStateMenuItem(List<POS> posList)
+        {
             //populate checkout state menu item
-            for (int i = 0; i < store.SCO_POSList.Count(); i++)
+            for (int i = 0; i < posList.Count(); i++)
             {
                 int index = i;
 
                 MenuItem menuItem = new MenuItem();
 
-                if(store.SCO_POSList[index].CheckoutState == CheckoutState.Open)
+                if (posList[index].CheckoutState == CheckoutState.Open)
                 {
-                    menuItem.Header = "Close " + store.SCO_POSList[index].ToString();
+                    menuItem.Header = "Close " + posList[index].ToString();
                 }
-                else if(store.SCO_POSList[index].CheckoutState == CheckoutState.Closed)
+                else if (posList[index].CheckoutState == CheckoutState.Closed)
                 {
-                    menuItem.Header = "Open " + store.SCO_POSList[index].ToString();
-                }
-                else
-                {
-                    menuItem.Header = "Undelay " + store.SCO_POSList[index].ToString();
-                }
-
-                menuItem.Click += new RoutedEventHandler(
-                    (sendItem, args) =>
-                        {
-                            if (store.SCO_POSList[index].CheckoutState == CheckoutState.Open)
-                            {
-                                if (store.SCO_POSList[index].CustomerCount() == 0)
-                                {
-                                    store.SCO_POSList[index].CheckoutState = CheckoutState.Closed;
-                                    menuItem.Header = "Open " + store.SCO_POSList[index].ToString();
-                                }
-                                else
-                                {
-                                    MessageBox.Show($"Error: Cannot close a POS with customers", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                }
-                            }
-                            else
-                            {
-                                store.SCO_POSList[index].CheckoutState = CheckoutState.Open;
-                                menuItem.Header = "Close " + store.SCO_POSList[index].ToString();
-                            }
-
-                            simulation.Update(store);
-                        }
-                    );
-
-                CheckoutStateMenuItem.Items.Add(menuItem);
-            }
-            for (int i = 0; i < store.CashierPOSList.Count(); i++)
-            {
-                int index = i;
-
-                MenuItem menuItem = new MenuItem();
-
-                if (store.CashierPOSList[index].CheckoutState == CheckoutState.Open)
-                {
-                    menuItem.Header = "Close " + store.CashierPOSList[index].ToString();
-                }
-                else if (store.CashierPOSList[index].CheckoutState == CheckoutState.Closed)
-                {
-                    menuItem.Header = "Open " + store.CashierPOSList[index].ToString();
+                    menuItem.Header = "Open " + posList[index].ToString();
                 }
                 else
                 {
-                    menuItem.Header = "Undelay " + store.CashierPOSList[index].ToString();
+                    menuItem.Header = "Undelay " + posList[index].ToString();
                 }
 
                 menuItem.Click += new RoutedEventHandler(
                     (sendItem, args) =>
                     {
-                        if (store.CashierPOSList[index].CheckoutState == CheckoutState.Open)
+                        if (posList[index].CheckoutState == CheckoutState.Open)
                         {
-                            if (store.CashierPOSList[index].CustomerCount() == 0)
+                            if (posList[index].CustomerCount() == 0)
                             {
-                                store.CashierPOSList[index].CheckoutState = CheckoutState.Closed;
-                                menuItem.Header = "Open " + store.CashierPOSList[index].ToString();
+                                posList[index].CheckoutState = CheckoutState.Closed;
+                                menuItem.Header = "Open " + posList[index].ToString();
                             }
                             else
                             {
@@ -169,8 +123,8 @@ namespace CustomerQueuingSystem
                         }
                         else
                         {
-                            store.CashierPOSList[index].CheckoutState = CheckoutState.Open;
-                            menuItem.Header = "Close " + store.CashierPOSList[index].ToString();
+                            posList[index].CheckoutState = CheckoutState.Open;
+                            menuItem.Header = "Close " + posList[index].ToString();
                         }
 
                         simulation.Update(store);
@@ -179,11 +133,6 @@ namespace CustomerQueuingSystem
 
                 CheckoutStateMenuItem.Items.Add(menuItem);
             }
-        }
-
-        private void RemoveCustomersMenuSubItem_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Window_Closing(object sender, EventArgs e)
@@ -236,7 +185,7 @@ namespace CustomerQueuingSystem
         {
             paymentChoice = PaymentType.Cash;
 
-            MakeCustomer();
+            AddCustomer();
 
             PaymentTypeScreen.Visibility = Visibility.Collapsed;
             ThankYouScreen.Visibility = Visibility.Visible;
@@ -246,13 +195,14 @@ namespace CustomerQueuingSystem
         {
             paymentChoice = PaymentType.Card;
 
-            MakeCustomer();
+            AddCustomer();
 
             PaymentTypeScreen.Visibility = Visibility.Collapsed;
             ThankYouScreen.Visibility = Visibility.Visible;
         }
 
-        private async void MakeCustomer()
+        //once the customer has finished checking out, make the customer object and add them to the store, checking for any recommendations.
+        private async void AddCustomer()
         {
             Customer customer = new Customer(paymentChoice, checkoutChoice, isExpress);
 
